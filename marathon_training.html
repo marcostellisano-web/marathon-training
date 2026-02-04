@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ottawa Marathon Training Plan - May 24, 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .race-info {
+            color: #666;
+            font-size: 1em;
+            margin-top: 5px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .stat-card .number {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .week-block {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #999;
+        }
+        
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .week-title {
+            font-size: 1.1em;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .week-dates {
+            color: #666;
+            font-size: 0.85em;
+        }
+        
+        .runs-container {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .run-item {
+            background: white;
+            padding: 12px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .run-item.completed {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        
+        .run-info {
+            flex: 1;
+        }
+        
+        .run-day {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+            font-size: 0.95em;
+        }
+        
+        .run-details {
+            color: #666;
+            font-size: 0.85em;
+        }
+        
+        .run-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            font-weight: 500;
+            margin-left: 6px;
+            background: #e0e0e0;
+            color: #666;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #666;
+        }
+        
+        .pace-guide {
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .pace-guide h2 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .pace-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9em;
+        }
+        
+        .pace-item:last-child {
+            border-bottom: none;
+        }
+        
+        .pace-label {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .pace-value {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ottawa Marathon Training</h1>
+            <div class="race-info">Race Day: May 24, 2025 | 15-Week Plan</div>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Weeks to Race</h3>
+                <div class="number" id="weeksRemaining">15</div>
+            </div>
+            <div class="stat-card">
+                <h3>Runs Completed</h3>
+                <div class="number" id="runsCompleted">0/38</div>
+            </div>
+            <div class="stat-card">
+                <h3>Completion Rate</h3>
+                <div class="number" id="completionRate">0%</div>
+            </div>
+        </div>
+        
+        <div id="training-plan"></div>
+        
+        <div class="pace-guide">
+            <h2>Pace Guide</h2>
+            <div class="pace-item">
+                <span class="pace-label">Easy Pace (most runs)</span>
+                <span class="pace-value">6:30 - 7:00 /km</span>
+            </div>
+            <div class="pace-item">
+                <span class="pace-label">Tempo Pace (quality workouts)</span>
+                <span class="pace-value">5:30 - 5:45 /km</span>
+            </div>
+            <div class="pace-item">
+                <span class="pace-label">Marathon Goal Pace</span>
+                <span class="pace-value">5:50 - 6:10 /km</span>
+            </div>
+            <div class="pace-item">
+                <span class="pace-label">Target Marathon Time</span>
+                <span class="pace-value">4:05 - 4:20</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const trainingPlan = [
+            {
+                week: 1,
+                startDate: "Feb 4",
+                endDate: "Feb 10",
+                focus: "Base Building - Ease back in",
+                runs: [
+                    { day: "Weekend Long Run", distance: "12 km", type: "long", notes: "Easy conversational pace, focus on feeling good" },
+                    { day: "Midweek Run", distance: "6 km", type: "easy", notes: "Easy effort, rebuild your legs" },
+                    { day: "Optional Easy", distance: "5 km", type: "easy", notes: "Very light if you feel good, skip if tired" }
+                ]
+            },
+            {
+                week: 2,
+                startDate: "Feb 11",
+                endDate: "Feb 17",
+                focus: "Base Building",
+                runs: [
+                    { day: "Weekend Long Run", distance: "14 km", type: "long", notes: "Easy pace, stay relaxed" },
+                    { day: "Midweek Run", distance: "7 km", type: "easy", notes: "Comfortable effort" },
+                    { day: "Optional Easy", distance: "6 km", type: "easy", notes: "Recovery pace if feeling fresh" }
+                ]
+            },
+            {
+                week: 3,
+                startDate: "Feb 18",
+                endDate: "Feb 24",
+                focus: "Building Volume",
+                runs: [
+                    { day: "Weekend Long Run", distance: "16 km", type: "long", notes: "Steady easy pace" },
+                    { day: "Midweek Run", distance: "8 km", type: "easy", notes: "Easy effort" },
+                    { day: "Optional Easy", distance: "6 km", type: "easy", notes: "Light recovery run" }
+                ]
+            },
+            {
+                week: 4,
+                startDate: "Feb 25",
+                endDate: "Mar 3",
+                focus: "Introduction to Tempo",
+                runs: [
+                    { day: "Weekend Long Run", distance: "18 km", type: "long", notes: "Easy pace, building endurance" },
+                    { day: "Tempo Run", distance: "8 km", type: "tempo", notes: "2 km easy warm-up, 4 km at tempo (5:30-5:45/km), 2 km cool down" },
+                    { day: "Optional Easy", distance: "6 km", type: "easy", notes: "Recovery pace" }
+                ]
+            },
+            {
+                week: 5,
+                startDate: "Mar 4",
+                endDate: "Mar 10",
+                focus: "Building Endurance",
+                runs: [
+                    { day: "Weekend Long Run", distance: "20 km", type: "long", notes: "Comfortable easy pace" },
+                    { day: "Tempo Run", distance: "9 km", type: "tempo", notes: "2 km warm-up, 5 km tempo, 2 km cool down" },
+                    { day: "Optional Easy", distance: "7 km", type: "easy", notes: "Light effort" }
+                ]
+            },
+            {
+                week: 6,
+                startDate: "Mar 11",
+                endDate: "Mar 17",
+                focus: "Peak Base Phase",
+                runs: [
+                    { day: "Weekend Long Run", distance: "22 km", type: "long", notes: "Easy pace, fuel during run" },
+                    { day: "Tempo Run", distance: "10 km", type: "tempo", notes: "2 km warm-up, 6 km tempo, 2 km cool down" },
+                    { day: "Optional Easy", distance: "7 km", type: "easy", notes: "Recovery run" }
+                ]
+            },
+            {
+                week: 7,
+                startDate: "Mar 18",
+                endDate: "Mar 24",
+                focus: "Building Long Run Distance",
+                runs: [
+                    { day: "Weekend Long Run", distance: "24 km", type: "long", notes: "Easy pace, practice fueling strategy" },
+                    { day: "Marathon Pace Run", distance: "10 km", type: "tempo", notes: "2 km warm-up, 6 km at goal marathon pace (5:50-6:10/km), 2 km cool down" },
+                    { day: "Optional Easy", distance: "7 km", type: "easy", notes: "Very easy recovery" }
+                ]
+            },
+            {
+                week: 8,
+                startDate: "Mar 25",
+                endDate: "Mar 31",
+                focus: "Peak Training Volume",
+                runs: [
+                    { day: "Weekend Long Run", distance: "26 km", type: "long", notes: "Steady easy pace, test race nutrition" },
+                    { day: "Marathon Pace Run", distance: "11 km", type: "tempo", notes: "2 km warm-up, 7 km at marathon pace, 2 km cool down" },
+                    { day: "Optional Easy", distance: "8 km", type: "easy", notes: "Light recovery" }
+                ]
+            },
+            {
+                week: 9,
+                startDate: "Apr 1",
+                endDate: "Apr 7",
+                focus: "Building to Peak Long Run",
+                runs: [
+                    { day: "Weekend Long Run", distance: "28 km", type: "long", notes: "Easy pace, focus on mental toughness" },
+                    { day: "Marathon Pace Run", distance: "11 km", type: "tempo", notes: "2 km warm-up, 7 km at marathon pace, 2 km cool down" },
+                    { day: "Optional Easy", distance: "8 km", type: "easy", notes: "Recovery pace" }
+                ]
+            },
+            {
+                week: 10,
+                startDate: "Apr 8",
+                endDate: "Apr 14",
+                focus: "Peak Long Run Week",
+                runs: [
+                    { day: "Weekend Long Run", distance: "30 km", type: "long", notes: "Your longest run! Easy pace, celebrate afterwards" },
+                    { day: "Marathon Pace Run", distance: "12 km", type: "tempo", notes: "2 km warm-up, 8 km at marathon pace, 2 km cool down" },
+                    { day: "Optional Easy", distance: "8 km", type: "easy", notes: "Light recovery" }
+                ]
+            },
+            {
+                week: 11,
+                startDate: "Apr 15",
+                endDate: "Apr 21",
+                focus: "Maintain Peak Fitness",
+                runs: [
+                    { day: "Weekend Long Run", distance: "32 km", type: "long", notes: "Final peak long run, easy pace throughout" },
+                    { day: "Marathon Pace Run", distance: "12 km", type: "tempo", notes: "2 km warm-up, 8 km at marathon pace, 2 km cool down" },
+                    { day: "Optional Easy", distance: "7 km", type: "easy", notes: "Recovery run" }
+                ]
+            },
+            {
+                week: 12,
+                startDate: "Apr 22",
+                endDate: "Apr 28",
+                focus: "Begin Taper - Recovery Phase",
+                runs: [
+                    { day: "Weekend Long Run", distance: "24 km", type: "long", notes: "Reduce volume, maintain easy pace" },
+                    { day: "Marathon Pace Run", distance: "10 km", type: "tempo", notes: "2 km warm-up, 6 km at marathon pace, 2 km cool down" },
+                    { day: "Optional Easy", distance: "6 km", type: "easy", notes: "Light effort" }
+                ]
+            },
+            {
+                week: 13,
+                startDate: "Apr 29",
+                endDate: "May 5",
+                focus: "Taper Continues",
+                runs: [
+                    { day: "Weekend Long Run", distance: "20 km", type: "long", notes: "Easy comfortable pace, trust your training" },
+                    { day: "Easy Run", distance: "8 km", type: "easy", notes: "All easy running this week" },
+                    { day: "Optional Easy", distance: "6 km", type: "easy", notes: "Light recovery" }
+                ]
+            },
+            {
+                week: 14,
+                startDate: "May 6",
+                endDate: "May 12",
+                focus: "Final Taper Week",
+                runs: [
+                    { day: "Easy Run", distance: "12 km", type: "easy", notes: "All easy pace, stay loose" },
+                    { day: "Easy Run", distance: "6 km", type: "easy", notes: "Very easy effort" },
+                    { day: "Easy Run", distance: "5 km", type: "easy", notes: "Light shakeout run" }
+                ]
+            },
+            {
+                week: 15,
+                startDate: "May 13",
+                endDate: "May 24",
+                focus: "RACE WEEK",
+                runs: [
+                    { day: "Easy Shakeout", distance: "5 km", type: "easy", notes: "Monday/Tuesday - keep legs loose" },
+                    { day: "Easy Shakeout", distance: "3 km", type: "easy", notes: "Thursday - very light, include 4-5 strides" },
+                    { day: "RACE DAY!", distance: "42.2 km", type: "race", notes: "Saturday May 24 - OTTAWA MARATHON! Trust your training, enjoy the race!" }
+                ]
+            }
+        ];
+        
+        function renderTrainingPlan() {
+            const container = document.getElementById('training-plan');
+            let html = '';
+            
+            trainingPlan.forEach(week => {
+                html += `
+                    <div class="week-block">
+                        <div class="week-header">
+                            <div>
+                                <div class="week-title">Week ${week.week}</div>
+                                <div class="week-dates">${week.startDate} - ${week.endDate}</div>
+                            </div>
+                            <div style="color: #667eea; font-weight: 600; font-size: 0.95em;">${week.focus}</div>
+                        </div>
+                        <div class="runs-container">
+                            ${week.runs.map((run, idx) => `
+                                <div class="run-item" data-week="${week.week}" data-run="${idx}">
+                                    <div class="run-info">
+                                        <div class="run-day">
+                                            ${run.day}
+                                            <span class="run-type type-${run.type}">${run.type.toUpperCase()}</span>
+                                        </div>
+                                        <div class="run-details">
+                                            <strong>${run.distance}</strong> - ${run.notes}
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-container">
+                                        <input type="checkbox" class="checkbox" data-week="${week.week}" data-run="${idx}">
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            loadProgress();
+            updateStats();
+        }
+        
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const progress = {};
+            checkboxes.forEach(cb => {
+                const key = `${cb.dataset.week}-${cb.dataset.run}`;
+                progress[key] = cb.checked;
+            });
+            localStorage.setItem('marathonProgress', JSON.stringify(progress));
+            updateStats();
+        }
+        
+        function loadProgress() {
+            const progress = JSON.parse(localStorage.getItem('marathonProgress') || '{}');
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach(cb => {
+                const key = `${cb.dataset.week}-${cb.dataset.run}`;
+                if (progress[key]) {
+                    cb.checked = true;
+                    cb.closest('.run-item').classList.add('completed');
+                }
+                
+                cb.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.closest('.run-item').classList.add('completed');
+                    } else {
+                        this.closest('.run-item').classList.remove('completed');
+                    }
+                    saveProgress();
+                });
+            });
+        }
+        
+        function updateStats() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const rate = Math.round((completed / total) * 100);
+            
+            document.getElementById('runsCompleted').textContent = `${completed}/${total}`;
+            document.getElementById('completionRate').textContent = `${rate}%`;
+            
+            // Calculate weeks remaining
+            const raceDate = new Date('2025-05-24');
+            const today = new Date();
+            const weeksRemaining = Math.ceil((raceDate - today) / (7 * 24 * 60 * 60 * 1000));
+            document.getElementById('weeksRemaining').textContent = weeksRemaining;
+        }
+        
+        renderTrainingPlan();
+    </script>
+</body>
+</html>
